@@ -20,7 +20,7 @@ namespace Reflection_Assignment
             return jsonString;
 
         }
-        static void Serialization(object mainObject, ref string json, object rootObject = null, int level = 1)
+        public static void Serialization(object mainObject, ref string json, object rootObject = null, int level = 1)
         {
             if (rootObject == null)
                 rootObject = mainObject;
@@ -35,7 +35,7 @@ namespace Reflection_Assignment
             }
 
         }
-        static void SerializeObject(PropertyInfo property, ref string data, object targetObject, bool CheckComma, int level = 1)
+        public static void SerializeObject(PropertyInfo property, ref string data, object targetObject, bool CheckComma, int level = 1)
         {
 
             var propertyValue = property.GetValue(targetObject);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reflection_Assignment
 {
-    class AdmissionTest
+    public class AdmissionTest
     {
         public DateTime StartDateTime { get; set; }
         public DateTime EndDateTime { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reflection_Assignment
 {
-    class Session
+    public class Session
     {
         public int DurationInHour { get; set; }
         public string LearningObjective { get; set; }

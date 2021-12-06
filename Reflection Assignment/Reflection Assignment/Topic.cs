@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Reflection_Assignment
 {
-    class Topic
+    public class Topic
     {
         public string Title { get; set; }
         public string Description { get; set; }
