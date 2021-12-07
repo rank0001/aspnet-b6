@@ -18,7 +18,6 @@ namespace Reflection_Assignment
             Serialization(targetObject, ref jsonString);
             jsonString += "\n}";
             return jsonString;
-
         }
         public static void Serialization(object mainObject, ref string json, object rootObject = null, int level = 1)
         {
@@ -41,7 +40,6 @@ namespace Reflection_Assignment
             var propertyValue = property.GetValue(targetObject);
 
             Type propType = property.PropertyType;
-
 
             if (propType.IsGenericType)
                 propType = propType.GetGenericTypeDefinition();
@@ -67,10 +65,10 @@ namespace Reflection_Assignment
             }
             else if (propType == typeof(List<>))
             {
-                int size = 0;
                 Type genericTypeArgument = property.PropertyType.GetGenericArguments()[0];
+
                 var list = propertyValue as ICollection;
-                
+
                 if (genericTypeArgument.IsClass || (genericTypeArgument.IsValueType && !genericTypeArgument.IsEnum))
                 {
                     int i = 0;
@@ -93,7 +91,7 @@ namespace Reflection_Assignment
                             data = StringConcat(propType, propertyValue, property, false, ref data, level, genericTypeArgument, '}') + ",";
                         }
                     }
-                    if(level==1 && CheckComma)
+                    if (level == 1 && CheckComma)
                     {
                         data = StringConcat(propType, propertyValue, property, true, ref data, level, genericTypeArgument, ']');
                     }
@@ -101,11 +99,39 @@ namespace Reflection_Assignment
                     {
                         data = StringConcat(propType, propertyValue, property, false, ref data, level, genericTypeArgument, ']');
                     }
-                    
+
                 }
+            }
+            else if (propType == typeof(Array))
+            {
+                data = StringConcat(propType, propertyValue, property, false, ref data, level) + "\"" + property.Name + "\"" + ":";
+
+                data = StringConcat(propType, propertyValue, property, false, ref data, level) + "[";
+
+                var arrayObject = property.GetValue(targetObject) as Array;
+
+                int k = 0;
+
+                foreach (var item in arrayObject)
+                {
+
+                    data = StringConcat(propType, propertyValue, property, false, ref data, level) + "{";
+
+                    Serialization(item, ref data, item, level + 1);
+
+                    k++;
+
+                    if (k == arrayObject.Length)
+                        data = StringConcat(propType, propertyValue, property, false, ref data, level) + "}";
+
+                    else
+                        data = StringConcat(propType, propertyValue, property, false, ref data, level) + "},";
+                }
+                data = StringConcat(propType, propertyValue, property, false, ref data, level) + "]";
             }
             else
             {
+
                 data = StringConcat(propType, propertyValue, property, false, ref data, level) + "\"" + property.Name + "\"" + ":";
 
                 data = StringConcat(propType, propertyValue, property, false, ref data, level) + "{";
@@ -124,7 +150,7 @@ namespace Reflection_Assignment
             jsonData += "\n";
             for (int j = 0; j < level; j++)
             {
-                
+
                 jsonData += "\t";
             }
             if (propertyType == typeof(string))
