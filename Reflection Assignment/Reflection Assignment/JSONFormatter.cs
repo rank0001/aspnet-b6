@@ -49,7 +49,6 @@ namespace Reflection_Assignment
             if (propType.IsArray)
                 propType = typeof(Array);
 
-
             if (propType == typeof(int) || propType.IsEnum)
             {
                 data = StringConcat(propType, propertyValue, property, CheckComma, ref data, level);
@@ -68,8 +67,10 @@ namespace Reflection_Assignment
             }
             else if (propType == typeof(List<>))
             {
+                int size = 0;
                 Type genericTypeArgument = property.PropertyType.GetGenericArguments()[0];
                 var list = propertyValue as ICollection;
+                
                 if (genericTypeArgument.IsClass || (genericTypeArgument.IsValueType && !genericTypeArgument.IsEnum))
                 {
                     int i = 0;
@@ -92,13 +93,19 @@ namespace Reflection_Assignment
                             data = StringConcat(propType, propertyValue, property, false, ref data, level, genericTypeArgument, '}') + ",";
                         }
                     }
-
-                    data = StringConcat(propType, propertyValue, property, false, ref data, level, genericTypeArgument, ']');
+                    if(level==1 && CheckComma)
+                    {
+                        data = StringConcat(propType, propertyValue, property, true, ref data, level, genericTypeArgument, ']');
+                    }
+                    else
+                    {
+                        data = StringConcat(propType, propertyValue, property, false, ref data, level, genericTypeArgument, ']');
+                    }
+                    
                 }
             }
             else
             {
-
                 data = StringConcat(propType, propertyValue, property, false, ref data, level) + "\"" + property.Name + "\"" + ":";
 
                 data = StringConcat(propType, propertyValue, property, false, ref data, level) + "{";
@@ -117,6 +124,7 @@ namespace Reflection_Assignment
             jsonData += "\n";
             for (int j = 0; j < level; j++)
             {
+                
                 jsonData += "\t";
             }
             if (propertyType == typeof(string))
