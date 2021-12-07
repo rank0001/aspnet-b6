@@ -44,9 +44,7 @@ namespace Reflection_Assignment
             if (propType.IsGenericType)
                 propType = propType.GetGenericTypeDefinition();
 
-            if (propType.IsArray)
-                propType = typeof(Array);
-
+           
             if (propType == typeof(int) || propType.IsEnum)
             {
                 data = StringConcat(propType, propertyValue, property, CheckComma, ref data, level);
