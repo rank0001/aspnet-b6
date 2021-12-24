@@ -9,7 +9,7 @@ namespace BookStore.Web.Models
     {
         public string Test()
         {
-            return "This is working!";
+            return "Dependency Injection is working!";
        }
     }
 }
