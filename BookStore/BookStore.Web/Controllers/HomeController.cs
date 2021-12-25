@@ -22,13 +22,13 @@ namespace BookStore.Web.Controllers
 
         public IActionResult Index()
         {
-            _logger.LogInformation("Currently in home index!");
+            _logger.LogInformation("logged information from home index!");
             return View(_testClass);
         }
 
         public IActionResult Privacy()
         {
-            _logger.LogInformation("Currently in privacy index!");
+            _logger.LogInformation("logged information from privacy index!");
             return View();
         }
 
