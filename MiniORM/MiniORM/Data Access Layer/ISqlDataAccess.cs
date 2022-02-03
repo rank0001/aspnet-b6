@@ -8,9 +8,13 @@ namespace MiniORM.Data_Access_Layer
 {
     public interface ISqlDataAccess<T> where T : class
     {
-        int Delete(int id);
-        int Delete(T item);
-        int Insert(T item);
-        int Update(T item);
+        void Delete(int id);
+        void Delete(T item);
+        void Insert(T item);
+        void Update(T item);
+        List<T> GetById(int id);
+        List<T> GetAll();
+
+
     }
 }

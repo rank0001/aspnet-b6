@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MiniORM
+namespace MiniORM.Models
 {
-    public interface IId
+    public class BaseId
     {
         public int Id { get; set; }
     }

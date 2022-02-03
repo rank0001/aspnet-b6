@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MiniORM.Models
 {
-    public class Instructor:IId
+    public class Instructor:BaseId
     {
 
-        public int Id { get; set; }
+        public new int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public Address PresentAddress { get; set; }
