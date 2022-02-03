@@ -136,9 +136,9 @@ namespace MiniORM.Data_Access_Layer
                                           .Select(p => $"{p.Name} = @{p.Name}");
             var columns = string.Join(", ", columnUpdates);
 
-           // Console.WriteLine(columns);
+           
             var columnId = string.Join(", ", properties.Select(p => p.Name).Where(p => p == "Id"));
-           // Console.WriteLine(columnId);
+           
 
             var sql = $"UPDATE {item.GetType().Name} SET {columns} WHERE {columnId} = @{columnId}";
            // Console.WriteLine(sql);
