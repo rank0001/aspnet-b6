@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Reflection;
 using System.Collections;
+using MiniORM.Models;
 
 namespace MiniORM.Data_Access_Layer
 {
@@ -33,7 +34,7 @@ namespace MiniORM.Data_Access_Layer
             var columns = string.Join(", ", properties.Select(p => p.Name));
             var columnParameters = string.Join(", ", properties.Select(p => $"@{p.Name}"));
             var sql = $"INSERT INTO {item.GetType().Name} ({columns}) VALUES ({columnParameters})";
-            Console.WriteLine(sql);
+            //Console.WriteLine(sql);
 
             using (var connection = new SqlConnection(ConnectionString))
             using (var command = new SqlCommand(sql, connection))
@@ -52,7 +53,7 @@ namespace MiniORM.Data_Access_Layer
                         {
                             command.Parameters.AddWithValue($"@{property.Name}", listValue.Peek());
 
-                            Console.WriteLine($"from list, there we go @{property.Name}" + " " + listValue.Peek());
+                            //Console.WriteLine($"from list, there we go @{property.Name}" + " " + listValue.Peek());
 
                             listValue.Dequeue();
                         }
@@ -61,7 +62,7 @@ namespace MiniORM.Data_Access_Layer
 
                             command.Parameters.AddWithValue($"@{property.Name}", objectValue.Peek());
 
-                            Console.WriteLine($" from obj, there we go @{property.Name}" + " " + objectValue.Peek());
+                           // Console.WriteLine($" from obj, there we go @{property.Name}" + " " + objectValue.Peek());
 
                             objectValue.Dequeue();
                         }
@@ -74,7 +75,7 @@ namespace MiniORM.Data_Access_Layer
 
                 command.ExecuteNonQuery();
                 var id = properties.Where(p => p.Name == "Id").Select(i => i.GetValue(item)).ToList();
-                Console.WriteLine("Id to return is " + id.First());
+               // Console.WriteLine("Id to return is " + id.First());
                 return Convert.ToInt32(id.FirstOrDefault());
 
             }
@@ -135,12 +136,12 @@ namespace MiniORM.Data_Access_Layer
                                           .Select(p => $"{p.Name} = @{p.Name}");
             var columns = string.Join(", ", columnUpdates);
 
-            Console.WriteLine(columns);
+           // Console.WriteLine(columns);
             var columnId = string.Join(", ", properties.Select(p => p.Name).Where(p => p == "Id"));
-            Console.WriteLine(columnId);
+           // Console.WriteLine(columnId);
 
             var sql = $"UPDATE {item.GetType().Name} SET {columns} WHERE {columnId} = @{columnId}";
-            Console.WriteLine(sql);
+           // Console.WriteLine(sql);
             using (var connection = new SqlConnection(ConnectionString))
             using (var command = new SqlCommand(sql, connection))
             {
@@ -158,7 +159,7 @@ namespace MiniORM.Data_Access_Layer
                         {
                             command.Parameters.AddWithValue($"@{property.Name}", listValue.Peek());
 
-                            Console.WriteLine($"from list, there we go @{property.Name}" + " " + listValue.Peek());
+                           // Console.WriteLine($"from list, there we go @{property.Name}" + " " + listValue.Peek());
                             listValue.Dequeue();
                         }
                         else
@@ -166,7 +167,7 @@ namespace MiniORM.Data_Access_Layer
 
                             command.Parameters.AddWithValue($"@{property.Name}", objectValue.Peek());
 
-                            Console.WriteLine($" from obj, there we go @{property.Name}" + " " + objectValue.Peek());
+                            //Console.WriteLine($" from obj, there we go @{property.Name}" + " " + objectValue.Peek());
                             objectValue.Dequeue();
                         }
 
@@ -220,7 +221,7 @@ namespace MiniORM.Data_Access_Layer
         public void Delete(int id)
         {
             var sql = $"Delete from {typeof(T).Name} where Id=@Id";
-            Console.WriteLine(sql);
+           // Console.WriteLine(sql);
             using (var connection = new SqlConnection(ConnectionString))
             using (var command = new SqlCommand(sql, connection))
             {
@@ -286,83 +287,41 @@ namespace MiniORM.Data_Access_Layer
             }
         }
 
-        //public List<T> GetAll()
-        //{
-        //    var list = new List<T>();
-
-        //    var properties = typeof(T).GetProperties();
-            
-        //    var columnNames = properties.Select(p => p.Name);
-        //    var columns = string.Join(", ", columnNames);
-
-        //    var sql = $"SELECT {columns} FROM {typeof(T).Name}";
-           
-        //    using (var connection = new SqlConnection(ConnectionString))
-        //    using (var command = new SqlCommand(sql, connection))
-        //    {
-        //        connection.Open();
-        //        using (var reader = command.ExecuteReader())
-        //        {
-        //            while (reader.Read())
-        //            {
-        //                var model = new T();
-
-        //                foreach (var property in properties)
-        //                {
-        //                    Console.WriteLine(property.Name +   " from here " + reader[property.Name]);
-        //                    property.SetValue(model, reader[property.Name]);
-        //                }
-
-        //                list.Add(model);
-        //            }
-        //        }
-        //    }
-
-        //    return list;
-        //}
-
         public List<T> GetAll()
         {
-            return new List<T>();
-        }
+            var list = new List<T>();
 
-        public void NestedGetAll()
-        {
             var properties = typeof(T).GetProperties();
 
-            foreach (var val in properties)
+            var columnNames = properties.Select(p => p.Name);
+            var columns = string.Join(", ", columnNames);
+
+            var sql = $"SELECT {columns} FROM {typeof(T).Name}";
+
+            using (var connection = new SqlConnection(ConnectionString))
+            using (var command = new SqlCommand(sql, connection))
             {
-                var propertyValue = val.GetValue(new T());
-                var propertyName = val.Name;
-                Type propType = val.PropertyType;
-                if (propType.IsGenericType)
-                    propType = propType.GetGenericTypeDefinition();
-                if (propType != typeof(int) && propType != typeof(string) && propType != typeof(double)
-                    && propType != typeof(DateTime))
+                connection.Open();
+                using (var reader = command.ExecuteReader())
                 {
-                    if (propType == typeof(List<>))
+                    while (reader.Read())
                     {
+                        var model = new T();
 
-                        Type genericTypeArgument = val.PropertyType.GetGenericArguments()[0];
-
-                        var list = propertyValue as ICollection;
-
-                        foreach (var it in list)
+                        foreach (var property in properties)
                         {
-                            Delete((T)it);
+                            property.SetValue(model, reader[property.Name]);
                         }
-                    }
-                    else
-                    {
-                        Delete((T)propertyValue);
 
+                        list.Add(model);
                     }
-
                 }
-
             }
 
+            return list;
         }
+
+
         public List<T> GetById(int id)
         {
             var list = new List<T>();
@@ -372,13 +331,13 @@ namespace MiniORM.Data_Access_Layer
             var columnNames = properties.Select(p => p.Name);
             var columns = string.Join(", ", columnNames);
 
-            var sql = $"SELECT {columns} FROM {typeof(T).Name} where Id=@personId";
+            var sql = $"SELECT {columns} FROM {typeof(T).Name} where Id=@Id";
 
             using (var connection = new SqlConnection(ConnectionString))
             using (var command = new SqlCommand(sql, connection))
             {
                 connection.Open();
-                command.Parameters.AddWithValue("@personId", id);
+                command.Parameters.AddWithValue("@Id", id);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
