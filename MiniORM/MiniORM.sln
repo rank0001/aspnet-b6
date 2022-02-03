@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniORM", "MiniORM\MiniORM.csproj", "{BD91834F-0865-40D8-A5D1-21253F279A1C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BD91834F-0865-40D8-A5D1-21253F279A1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD91834F-0865-40D8-A5D1-21253F279A1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD91834F-0865-40D8-A5D1-21253F279A1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD91834F-0865-40D8-A5D1-21253F279A1C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1E7E947-D6CE-4814-B031-852FC023F299}
+	EndGlobalSection
+EndGlobal
