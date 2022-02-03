@@ -12,7 +12,7 @@ namespace MiniORM.Data_Access_Layer
     public class SqlDataAccess<T> : ISqlDataAccess<T> where T : class,new()
     {
 
-        public const string ConnectionString = "Data Source = DESKTOP-2DBIAFT; Initial Catalog = MiniORM_db;Integrated Security = true";
+        public const string ConnectionString = "Data Source = DESKTOP-2DBIAFT; Initial Catalog = MiniORM_db; Integrated Security = true";
 
         public void Insert(T item)
         {
@@ -217,7 +217,6 @@ namespace MiniORM.Data_Access_Layer
 
         }
 
-
         public void Delete(int id)
         {
             var sql = $"Delete from {typeof(T).Name} where Id=@Id";
@@ -237,37 +236,6 @@ namespace MiniORM.Data_Access_Layer
             NestedDelete(item);
 
             var properties = item.GetType().GetProperties();
-
-            //foreach (var val in properties)
-            //{
-            //    var propertyValue = val.GetValue(item);
-            //    var propertyName = val.Name;
-            //    Type propType = val.PropertyType;
-            //    if (propType.IsGenericType)
-            //        propType = propType.GetGenericTypeDefinition();
-            //    if (propType != typeof(int) && propType != typeof(string) && propType != typeof(double)
-            //        && propType != typeof(DateTime))
-            //    {
-            //        if (propType == typeof(List<>))
-            //        {
-
-            //            Type genericTypeArgument = val.PropertyType.GetGenericArguments()[0];
-
-            //            var list = propertyValue as ICollection;
-
-            //            foreach (var it in list)
-            //            {
-            //                Delete((T)it);
-            //            }
-            //        }
-            //        else
-            //        {
-            //            Delete((T)propertyValue);
-            //        }
-
-            //    }
-
-            //}
 
             var id = Convert.ToInt32(properties.Where(p => p.Name == "Id").Select(i => i.GetValue(item)).ToList().FirstOrDefault());
             var sql = $"Delete from {item.GetType().Name} where Id=@Id";
@@ -310,45 +278,90 @@ namespace MiniORM.Data_Access_Layer
                     else
                     {
                         Delete((T)propertyValue);
+
                     }
 
                 }
 
             }
         }
+
+        //public List<T> GetAll()
+        //{
+        //    var list = new List<T>();
+
+        //    var properties = typeof(T).GetProperties();
+            
+        //    var columnNames = properties.Select(p => p.Name);
+        //    var columns = string.Join(", ", columnNames);
+
+        //    var sql = $"SELECT {columns} FROM {typeof(T).Name}";
+           
+        //    using (var connection = new SqlConnection(ConnectionString))
+        //    using (var command = new SqlCommand(sql, connection))
+        //    {
+        //        connection.Open();
+        //        using (var reader = command.ExecuteReader())
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                var model = new T();
+
+        //                foreach (var property in properties)
+        //                {
+        //                    Console.WriteLine(property.Name +   " from here " + reader[property.Name]);
+        //                    property.SetValue(model, reader[property.Name]);
+        //                }
+
+        //                list.Add(model);
+        //            }
+        //        }
+        //    }
+
+        //    return list;
+        //}
+
         public List<T> GetAll()
         {
-            var list = new List<T>();
+            return new List<T>();
+        }
 
+        public void NestedGetAll()
+        {
             var properties = typeof(T).GetProperties();
-            
 
-            var columnNames = properties.Select(p => p.Name);
-            var columns = string.Join(", ", columnNames);
-
-            var sql = $"SELECT {columns} FROM {typeof(T).Name}";
-           
-            using (var connection = new SqlConnection(ConnectionString))
-            using (var command = new SqlCommand(sql, connection))
+            foreach (var val in properties)
             {
-                connection.Open();
-                using (var reader = command.ExecuteReader())
+                var propertyValue = val.GetValue(new T());
+                var propertyName = val.Name;
+                Type propType = val.PropertyType;
+                if (propType.IsGenericType)
+                    propType = propType.GetGenericTypeDefinition();
+                if (propType != typeof(int) && propType != typeof(string) && propType != typeof(double)
+                    && propType != typeof(DateTime))
                 {
-                    while (reader.Read())
+                    if (propType == typeof(List<>))
                     {
-                        var model = new T();
 
-                        foreach (var property in properties)
+                        Type genericTypeArgument = val.PropertyType.GetGenericArguments()[0];
+
+                        var list = propertyValue as ICollection;
+
+                        foreach (var it in list)
                         {
-                            property.SetValue(model, reader[property.Name]);
+                            Delete((T)it);
                         }
-
-                        list.Add(model);
                     }
+                    else
+                    {
+                        Delete((T)propertyValue);
+
+                    }
+
                 }
+
             }
 
-            return list;
         }
         public List<T> GetById(int id)
         {

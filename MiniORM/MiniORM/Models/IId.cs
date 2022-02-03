@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MiniORM.Models
 {
-    public class BaseId
+    public interface IId
     {
         public int Id { get; set; }
     }

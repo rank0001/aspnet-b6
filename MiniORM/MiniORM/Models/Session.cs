@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MiniORM.Models
 {
-    public class Session:BaseId
+    public class Session:IId
     {
-        public new int Id { get; set; }
+        public int Id { get; set; }
         public int DurationInHour { get; set; }
         public string LearningObjective { get; set; }
     }

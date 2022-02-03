@@ -10,48 +10,48 @@ namespace MiniORM
         static void Main(string[] args)
         {
             #region Object Initialization
-            BaseId session = new Session
+            Session session = new Session
             {
                 Id = 33,
                 DurationInHour = 5,
                 LearningObjective = "to understand C# generics basic!"
             };
-            BaseId topic = new Topic
+            Topic topic = new Topic
             {
                 Id = 34,
                 Title = "C# delegates",
                 Description = "It's an advance topic!",
                 Sessions = new List<Session>() { (Session)session }
             };
-            BaseId phone = new Phone()
+            Phone phone = new Phone()
             {
                 Id = 93,
                 Number = "01719369158",
                 Extension = "7",
                 CountryCode = "+880"
             };
-            BaseId presentAddress = new Address()
+            Address presentAddress = new Address()
             {
                 Id = 300,
                 City = "Dhaka",
                 Country = "Bangladesh",
                 Street = "sector-12"
             };
-            BaseId permanentAddress = new Address()
+            Address permanentAddress = new Address()
             {
                 Id = 203,
                 City = "Kishoregonj",
                 Country = "Bangladesh",
                 Street = "Jamalpur"
             };
-            BaseId admissionTest = new AdmissionTest()
+            AdmissionTest admissionTest = new AdmissionTest()
             {
                 Id = 503,
                 StartDate = new DateTime(2021, 12, 1),
                 EndDate = new DateTime(2022, 1, 1),
                 TestFees = 100.55
             };
-            BaseId instructor = new Instructor()
+            Instructor instructor = new Instructor()
             {
                 Id = 152,
                 Name = "Zubayer Ahmed",
@@ -60,7 +60,7 @@ namespace MiniORM
                 PresentAddress = (Address)presentAddress,
                 PhoneNumbers = new List<Phone>() { (Phone)phone }
             };
-            BaseId course = new Course()
+            Course course = new Course()
             {
                 Id = 5,
                 Title = "Dot net Course",
@@ -71,17 +71,31 @@ namespace MiniORM
             };
             #endregion
 
-            ISqlDataAccess<BaseId> sql = new SqlDataAccess<BaseId>();
+            ISqlDataAccess<Course> sql = new SqlDataAccess<Course>();
+
+            #region Insert
             //sql.Insert(course);
+            #endregion
+
+            #region Update
             //sql.Update(course);
+            #endregion
+
+            #region Delete
             //sql.Delete(course);
-            ISqlDataAccess<Topic> session1 = new SqlDataAccess<Topic>();
-            var lists = session1.GetAll();
-            foreach (var item in lists)
+            //sql.Delete(1);
+            #endregion
+
+            #region Read
+            ISqlDataAccess<Session> sessionForId = new SqlDataAccess<Session>();
+            var allSessions = sessionForId.GetById(1);
+            foreach (var sesssion in allSessions)
             {
-                
-                Console.WriteLine(item.Id + " " + item.Title + " " + item.Description);
+                Console.WriteLine("ID: " + sesssion.Id + " Duration:" +
+                    sesssion.DurationInHour +
+                    " Learning Objective: " + sesssion.LearningObjective);
             }
+            #endregion
         }
     }
 }
