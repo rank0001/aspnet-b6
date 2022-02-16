@@ -1,1 +1,1 @@
-### Assignment and Exams for dot net batch 6
+### An assignment in asp dot net mvc to demonstrate a simple crud opeartion
