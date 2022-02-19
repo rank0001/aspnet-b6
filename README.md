@@ -1,1 +1,1 @@
-### Assignment and Exams for dot net batch 6
+### A basic CRUD application in asp dot net MVC 
