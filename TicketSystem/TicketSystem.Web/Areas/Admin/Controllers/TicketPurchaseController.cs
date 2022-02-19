@@ -48,7 +48,7 @@ namespace TicketSystem.Web.Areas.Admin.Controllers
                 {
                     model.CreateCourse();
 
-                    TempData["ResponseMessage"] = "Successfuly added a new course.";
+                    TempData["ResponseMessage"] = "Successfuly created a new ticket.";
                     TempData["ResponseType"] = ResponseTypes.Success;
 
                     return RedirectToAction("Index");
@@ -64,7 +64,7 @@ namespace TicketSystem.Web.Areas.Admin.Controllers
                 {
                     _logger.LogError(ex, ex.Message);
                     TempData["ResponseMessage"] = "There was a problem in" +
-                        " creating course.";
+                        " creating ticket.";
                     TempData["ResponseType"] = ResponseTypes.Danger;
                 }
             }

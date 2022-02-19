@@ -29,7 +29,7 @@ namespace TicketSystem.Web.Areas.Admin.Models
         [StringLength(50, ErrorMessage = "Number should be less than 50 chars")]
         public string BusNumber { get; set; }
 
-        public DateTime OnboardingTime { get; set; } = DateTime.Now;
+        public DateTime OnboardingTime { get; set; }
 
         public TicketPurchaseCreateModel()
         {
