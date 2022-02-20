@@ -1,1 +1,1 @@
-### An assignment in asp dot net mvc to demonstrate a simple CRUD operation
+### Assignment and exam collection in asp dot net batch 6
