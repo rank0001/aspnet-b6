@@ -12,6 +12,9 @@ namespace TicketSystem.Web.Areas.Admin.Models
         private ILifetimeScope _scope;
         private IMapper _mapper;
 
+
+        public int Id { get; set; }
+
         [StringLength(100, ErrorMessage = "Name should be less than 200 chars")]
         public string CustomerName { get; set; }
 
@@ -29,7 +32,7 @@ namespace TicketSystem.Web.Areas.Admin.Models
         [StringLength(50, ErrorMessage = "Number should be less than 50 chars")]
         public string BusNumber { get; set; }
 
-        public DateTime OnboardingTime { get; set; } = DateTime.Now;
+        public DateTime OnboardingTime { get; set; } 
 
         public TicketPurchaseEditModel()
         {

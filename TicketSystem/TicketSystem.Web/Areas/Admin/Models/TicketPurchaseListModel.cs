@@ -12,13 +12,14 @@ namespace TicketSystem.Web.Areas.Admin.Models
             _ticketPurchaseService = ticketPurchaseService;
         }
 
-        public object GetPagedCourses(DataTablesAjaxRequestModel model)
+        public object GetPagedTickets(DataTablesAjaxRequestModel model)
         {
             var data = _ticketPurchaseService.GetTickets(
                 model.PageIndex,
                 model.PageSize,
                 model.SearchText,
-                model.GetSortText(new string[] { "CustomerName", "TicketPrice" }));
+                model.GetSortText(new string[] {"CustomerName","CustomerAddress", 
+                "TicketPrice", ",", ",","OnboardingTime" }));
 
             return new
             {
@@ -29,8 +30,8 @@ namespace TicketSystem.Web.Areas.Admin.Models
                         {
                                 record.CustomerName,
                                 record.CustomerAddress,
-                                record.SeatNumber,
                                 record.TicketPrice.ToString(),
+                                record.SeatNumber,
                                 record.BusNumber,
                                 record.OnboardingTime.ToString(),
                                 record.Id.ToString()
@@ -39,7 +40,7 @@ namespace TicketSystem.Web.Areas.Admin.Models
             };
         }
 
-        internal void DeleteCourse(int id)
+        internal void DeleteTicket(int id)
         {
             _ticketPurchaseService.DeleteTicket(id);
         }

@@ -51,18 +51,18 @@ namespace TicketSystem.Layer.Services
         {
             var ticketCount = _ticketPurchaseUnifOfWork.Tickets
                 .GetCount(x => x.BusNumber == ticket.
-                BusNumber && x.SeatNumber==ticket.SeatNumber );
+                BusNumber && x.SeatNumber == ticket.SeatNumber && x.Id!=ticket.Id);
 
             if (ticketCount == 0)
             {
                 var ticketEntity = _ticketPurchaseUnifOfWork.Tickets.GetById(ticket.Id);
 
-                ticketEntity = _mapper.Map(ticket, ticketEntity);
+                _mapper.Map(ticket, ticketEntity);
 
                 _ticketPurchaseUnifOfWork.Save();
             }
             else
-                throw new DuplicateException("Course name already exists");
+                throw new DuplicateException("Seat is booked!");
         }
 
         public TicketPurchase GetTicket(int id)

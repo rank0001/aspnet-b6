@@ -29,7 +29,7 @@ namespace TicketSystem.Web.Areas.Admin.Models
         [StringLength(50, ErrorMessage = "Number should be less than 50 chars")]
         public string BusNumber { get; set; }
 
-        public DateTime OnboardingTime { get; set; }
+        public DateTime OnboardingTime { get; set; } = DateTime.Now;
 
         public TicketPurchaseCreateModel()
         {
@@ -51,7 +51,7 @@ namespace TicketSystem.Web.Areas.Admin.Models
             _mapper = _scope.Resolve<IMapper>();
         }
 
-        internal void CreateCourse()
+        internal void CreateTicket()
         {
             var ticket = _mapper.Map<TicketPurchase>(this);
 

@@ -34,7 +34,7 @@ namespace TicketSystem.Web.Areas.Admin.Controllers
         {
             var dataTableModel = new DataTablesAjaxRequestModel(Request);
             var model = _scope.Resolve<TicketPurchaseListModel>();
-            return Json(model.GetPagedCourses(dataTableModel));
+            return Json(model.GetPagedTickets(dataTableModel));
         }
 
         [ValidateAntiForgeryToken, HttpPost]
@@ -46,7 +46,9 @@ namespace TicketSystem.Web.Areas.Admin.Controllers
 
                 try
                 {
-                    model.CreateCourse();
+                    
+                    Console.WriteLine(model.OnboardingTime);
+                    model.CreateTicket();
 
                     TempData["ResponseMessage"] = "Successfuly created a new ticket.";
                     TempData["ResponseType"] = ResponseTypes.Success;
@@ -90,7 +92,7 @@ namespace TicketSystem.Web.Areas.Admin.Controllers
                 {
                     model.EditTicket();
 
-                    TempData["ResponseMessage"] = "Successfuly updated course.";
+                    TempData["ResponseMessage"] = "Successfuly updated ticket.";
                     TempData["ResponseType"] = ResponseTypes.Success;
 
                     return RedirectToAction("Index");
@@ -105,7 +107,7 @@ namespace TicketSystem.Web.Areas.Admin.Controllers
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, ex.Message);
-                    TempData["ResponseMessage"] = "There was a problem in updating course.";
+                    TempData["ResponseMessage"] = "There was a problem in updating the ticket.";
                     TempData["ResponseType"] = ResponseTypes.Danger;
                 }
             }
@@ -119,15 +121,15 @@ namespace TicketSystem.Web.Areas.Admin.Controllers
             try
             {
                 var model = _scope.Resolve<TicketPurchaseListModel>();
-                model.DeleteCourse(id);
+                model.DeleteTicket(id);
 
-                TempData["ResponseMessage"] = "Successfuly deleted course.";
+                TempData["ResponseMessage"] = "Successfuly deleted ticket.";
                 TempData["ResponseType"] = ResponseTypes.Success;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                TempData["ResponseMessage"] = "There was a problem in deleteing course.";
+                TempData["ResponseMessage"] = "There was a problem in deleteing the ticket.";
                 TempData["ResponseType"] = ResponseTypes.Danger;
             }
 
