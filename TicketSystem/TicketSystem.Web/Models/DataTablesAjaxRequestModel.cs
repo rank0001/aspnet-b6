@@ -82,7 +82,8 @@ namespace TicketSystem.Web.Models
             else if (method == "post")
                 return ReadValues(_request.Form, columnNames);
             else
-                throw new InvalidOperationException("Http method not supported, use get or post");
+                throw new InvalidOperationException("Http method not " +
+                    "supported, use get or post");
         }
 
         private string ReadValues(IEnumerable<KeyValuePair<string, StringValues>> 
@@ -96,12 +97,15 @@ namespace TicketSystem.Web.Models
                     if (sortText.Length > 0)
                         sortText.Append(",");
 
-                    var columnValue = requestValues.Where(x => x.Key == $"order[{i}][column]").FirstOrDefault();
-                    var directionValue = requestValues.Where(x => x.Key == $"order[{i}][dir]").FirstOrDefault();
+                    var columnValue = requestValues.Where
+                        (x => x.Key == $"order[{i}][column]").FirstOrDefault();
+                    var directionValue = requestValues.Where
+                        (x => x.Key == $"order[{i}][dir]").FirstOrDefault();
 
                     var column = int.Parse(columnValue.Value.ToArray()[0]);
                     var direction = directionValue.Value.ToArray()[0];
-                    var sortDirection = $"{columnNames[column]} {(direction == "asc" ? "asc" : "desc")}";
+                    var sortDirection = $"{columnNames[column]} " +
+                        $"{(direction == "asc" ? "asc" : "desc")}";
                     sortText.Append(sortDirection);
                 }
             }

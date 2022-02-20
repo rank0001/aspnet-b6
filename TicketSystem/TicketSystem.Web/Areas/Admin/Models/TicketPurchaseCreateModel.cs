@@ -23,8 +23,8 @@ namespace TicketSystem.Web.Areas.Admin.Models
         public string SeatNumber { get; set; }
 
 
-        [Range(0, 20000, ErrorMessage = "Price should be between 0 to 20,000")]
-        public int TicketPrice { get; set; }
+        [Range(100, 20000, ErrorMessage = "Price should be between 100 to 20,000")]
+        public int TicketPrice { get; set; } = 100;
 
         [StringLength(50, ErrorMessage = "Number should be less than 50 chars")]
         public string BusNumber { get; set; }
