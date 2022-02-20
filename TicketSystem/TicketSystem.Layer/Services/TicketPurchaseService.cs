@@ -28,16 +28,19 @@ namespace TicketSystem.Layer.Services
 
             var ticketCount = _ticketPurchaseUnifOfWork.Tickets
                 .GetCount(x => x.BusNumber == ticket.BusNumber && x.SeatNumber==ticket.SeatNumber);
-
-            if (ticketCount == 0)
+            if (ticket.OnboardingTime >= DateTime.Now)
             {
-                var entity = _mapper.Map<TicketEO>(ticket);
-
-                _ticketPurchaseUnifOfWork.Tickets.Add(entity);
-                _ticketPurchaseUnifOfWork.Save();
+                if (ticketCount == 0)
+                {
+                    var entity = _mapper.Map<TicketEO>(ticket);
+                    _ticketPurchaseUnifOfWork.Tickets.Add(entity);
+                    _ticketPurchaseUnifOfWork.Save();
+                }
+                else
+                    throw new DuplicateException("Sorry! The Seat is booked!");
             }
             else
-                throw new DuplicateException("Sorry! The Seat is booked!");
+                throw new InvalidDateException("Sorry! Invalid date provided!");
         }
 
         public void DeleteTicket(int id)
@@ -52,17 +55,21 @@ namespace TicketSystem.Layer.Services
             var ticketCount = _ticketPurchaseUnifOfWork.Tickets
                 .GetCount(x => x.BusNumber == ticket.
                 BusNumber && x.SeatNumber == ticket.SeatNumber && x.Id!=ticket.Id);
-
-            if (ticketCount == 0)
+            if (ticket.OnboardingTime >= DateTime.Now)
             {
-                var ticketEntity = _ticketPurchaseUnifOfWork.Tickets.GetById(ticket.Id);
+                if (ticketCount == 0)
+                {
+                    var ticketEntity = _ticketPurchaseUnifOfWork.Tickets.GetById(ticket.Id);
 
-                _mapper.Map(ticket, ticketEntity);
+                    _mapper.Map(ticket, ticketEntity);
 
-                _ticketPurchaseUnifOfWork.Save();
+                    _ticketPurchaseUnifOfWork.Save();
+                }
+                else
+                    throw new DuplicateException("Seat is booked!");
             }
             else
-                throw new DuplicateException("Seat is booked!");
+                throw new InvalidDateException("Sorry! Invalid date provided!");
         }
 
         public TicketPurchase GetTicket(int id)

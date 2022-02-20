@@ -45,8 +45,7 @@ namespace TicketSystem.Web.Areas.Admin.Controllers
                 model.Resolve(_scope);
 
                 try
-                {
-                    
+                {                  
                     Console.WriteLine(model.OnboardingTime);
                     model.CreateTicket();
 
@@ -57,6 +56,13 @@ namespace TicketSystem.Web.Areas.Admin.Controllers
                     return RedirectToAction("Index");
                 }
                 catch (DuplicateException ioe)
+                {
+                    _logger.LogError(ioe, ioe.Message);
+
+                    TempData["ResponseMessage"] = ioe.Message;
+                    TempData["ResponseType"] = ResponseTypes.Danger;
+                }
+                catch (InvalidDateException ioe)
                 {
                     _logger.LogError(ioe, ioe.Message);
 
@@ -102,6 +108,12 @@ namespace TicketSystem.Web.Areas.Admin.Controllers
                 {
                     _logger.LogError(ioe, ioe.Message);
 
+                    TempData["ResponseMessage"] = ioe.Message;
+                    TempData["ResponseType"] = ResponseTypes.Danger;
+                }
+                catch (InvalidDateException ioe)
+                {
+                    _logger.LogError(ioe, ioe.Message);
                     TempData["ResponseMessage"] = ioe.Message;
                     TempData["ResponseType"] = ResponseTypes.Danger;
                 }

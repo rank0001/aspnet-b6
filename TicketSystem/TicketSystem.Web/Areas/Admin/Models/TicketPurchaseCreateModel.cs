@@ -29,6 +29,7 @@ namespace TicketSystem.Web.Areas.Admin.Models
         [StringLength(50, ErrorMessage = "Number should be less than 50 chars")]
         public string BusNumber { get; set; }
 
+        [DataType(DataType.DateTime, ErrorMessage = "A valid Date or Date and Time must be entered")]
         public DateTime OnboardingTime { get; set; } = DateTime.Now;
 
         public TicketPurchaseCreateModel()
@@ -58,6 +59,6 @@ namespace TicketSystem.Web.Areas.Admin.Models
             _ticketPurchaseService.CreateTicket(ticket);
         }
 
-        
+
     }
 }
