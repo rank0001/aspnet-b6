@@ -24,12 +24,12 @@
                 chars[0] = chng;
                 cnt++;
             }
+            Console.WriteLine("The rotated string is:");
             foreach (var item in chars)
             {
                 Console.Write(item);
             }
             Console.WriteLine();
-
 
         }
     }

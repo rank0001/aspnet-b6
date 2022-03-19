@@ -10,26 +10,32 @@
                 new Customer{Name="sakib",Id=1},
                 new Customer{Name="rakib",Id=2},
                 new Customer{Name = "ahsan",Id=3},
-                new Customer{Name = "afsar",Id=4}
             };
             List<Order> orders = new List<Order>
             {
                 new Order{CustomerId=1,ProductName="pen",Quantity=3},
                 new Order{CustomerId=2,ProductName="bottle",Quantity=2},
                 new Order{CustomerId=3,ProductName="fan",Quantity=5},
-                new Order{CustomerId=5,ProductName="bedsheet",Quantity=20}
 
             };
 
             var query =
-            from o in orders
-            join c in customers on o.CustomerId equals c.Id
-            select new
+            orders.Join(customers, o => o.CustomerId, c => c.Id, (o, c)
+              => new
+                {
+                    Pname = o.ProductName,
+                    Cname = c.Name,
+                    PQuantity = o.Quantity
+                }).AsEnumerable()
+                .Select(o => new Tuple<string, string, int>(o.Pname, o.Cname, o.PQuantity))
+                .ToList();
+
+            foreach (var item in query)
             {
-                c.Name,
-                o.ProductName,
-                o.Quantity
-            };
+                Console.WriteLine(item.Item1 + " " + item.Item2 + " " + item.Item3);
+            }
+
+
 
         }
     }
