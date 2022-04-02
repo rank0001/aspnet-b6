@@ -19,15 +19,13 @@ namespace StockData.Layer.Services
         }
         public void CreateCompany(Company company)
         {
-            var companiesCount = _companyUnitOfWork.
-                            Companies.GetCount();
-            if (companiesCount == 0)
-            {
                 var entity = _mapper.Map<CompanyEntity>(company);
                 _companyUnitOfWork.Companies.Add(entity);
                 _companyUnitOfWork.Save();
-            }
-            
+        }
+        public int GetCompanyCount()
+        {
+            return _companyUnitOfWork.Companies.GetCount();
         }
     }
 }

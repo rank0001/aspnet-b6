@@ -18,7 +18,7 @@ namespace StockData.Layer
         }
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<IStockDbContext>().AsSelf()
+            builder.RegisterType<StockDbContext>().AsSelf()
                 .WithParameter("connectionString", _connectionString)
                 .WithParameter("assemblyName", _assemblyName)
                 .InstancePerLifetimeScope();
