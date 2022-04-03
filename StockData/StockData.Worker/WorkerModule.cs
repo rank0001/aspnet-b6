@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using StockData.Worker.Models.Companies;
 
 namespace StockData.Worker
 {
@@ -19,7 +18,6 @@ namespace StockData.Worker
 
         protected override void Load(ContainerBuilder builder)
         {
-           // builder.RegisterType<CompanyCreateModel>().AsSelf();
             base.Load(builder);
         }
     }

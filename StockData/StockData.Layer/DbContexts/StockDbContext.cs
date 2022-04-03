@@ -13,8 +13,6 @@ namespace StockData.Layer.DbContexts
 
         private readonly string _connectionString;
         private readonly string _assemblyName;
-
-
         public StockDbContext(string connectionString, string assemblyName)
         {
 
@@ -29,23 +27,17 @@ namespace StockData.Layer.DbContexts
 
             base.OnConfiguring(optionsBuilder);
         }
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
             modelBuilder.Entity<Company>()
                 .HasMany(n => n.StockPrices)
                 .WithOne(a => a.Company)
                 .HasForeignKey(x => x.CompanyId);
-
-
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Company> Companies { get; set; }
-
-       // public DbSet<StockPrice> StockPrices { get; set; }
+        public DbSet<StockPrice> StockPrices { get; set; }
 
     }
 }

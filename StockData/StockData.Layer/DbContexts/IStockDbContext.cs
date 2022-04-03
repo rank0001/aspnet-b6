@@ -6,7 +6,7 @@ namespace StockData.Layer.DbContexts
     public interface IStockDbContext
     {
         DbSet<Company> Companies { get; set; }
-      //  DbSet<StockPrice> StockPrices { get; set; }
+        DbSet<StockPrice> StockPrices { get; set; }
 
     }
 }

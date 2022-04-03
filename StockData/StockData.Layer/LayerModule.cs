@@ -39,6 +39,16 @@ namespace StockData.Layer
             builder.RegisterType<CompanyService>().As<ICompanyService>()
                 .InstancePerLifetimeScope();
 
+            builder.RegisterType<StockUnitOfWork>().
+                As<IStockUnitOfWork>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<StockRepository>().As<IStockRepository>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<StockService>().As<IStockService>()
+                .InstancePerLifetimeScope();
+
         }
     }
 }

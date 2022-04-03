@@ -2,8 +2,8 @@
 using StockData.Layer.Repositories;
 namespace StockData.Layer.UnitOfWorks
 {
-    public interface ICompanyUnitOfWork:IUnitOfWork
+    public interface IStockUnitOfWork:IUnitOfWork
     {
-        ICompanyRepository Companies { get;}
+        IStockRepository Stocks { get; }
     }
 }

@@ -32,8 +32,4 @@
   <ItemGroup>
     <ProjectReference Include="..\StockData.Layer\StockData.Layer.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Migrations\" />
-  </ItemGroup>
 </Project>

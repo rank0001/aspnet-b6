@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace StockData.Worker.Data.Migrations
+namespace StockData.Worker.Migrations
 {
-    public partial class CreatingCompanyTable : Migration
+    public partial class CreatingStocksTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,7 +22,7 @@ namespace StockData.Worker.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StockPrice",
+                name: "StockPrices",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -40,9 +40,9 @@ namespace StockData.Worker.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StockPrice", x => x.Id);
+                    table.PrimaryKey("PK_StockPrices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StockPrice_Companies_CompanyId",
+                        name: "FK_StockPrices_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
                         principalColumn: "Id",
@@ -50,15 +50,15 @@ namespace StockData.Worker.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_StockPrice_CompanyId",
-                table: "StockPrice",
+                name: "IX_StockPrices_CompanyId",
+                table: "StockPrices",
                 column: "CompanyId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "StockPrice");
+                name: "StockPrices");
 
             migrationBuilder.DropTable(
                 name: "Companies");

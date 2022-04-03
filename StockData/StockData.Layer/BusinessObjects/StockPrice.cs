@@ -3,6 +3,7 @@
     public class StockPrice
     {
         public int Id { get; set; }
+        public int CompanyId { get; set; }
         public double LastTradingPrice { get; set; }
         public double HighestPrice { get; set; }
         public double LowestPrice { get; set; }

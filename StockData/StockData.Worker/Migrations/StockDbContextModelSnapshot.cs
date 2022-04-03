@@ -7,7 +7,7 @@ using StockData.Layer.DbContexts;
 
 #nullable disable
 
-namespace StockData.Worker.Data.Migrations
+namespace StockData.Worker.Migrations
 {
     [DbContext(typeof(StockDbContext))]
     partial class StockDbContextModelSnapshot : ModelSnapshot
@@ -79,7 +79,7 @@ namespace StockData.Worker.Data.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("StockPrice");
+                    b.ToTable("StockPrices");
                 });
 
             modelBuilder.Entity("StockData.Layer.Entities.StockPrice", b =>

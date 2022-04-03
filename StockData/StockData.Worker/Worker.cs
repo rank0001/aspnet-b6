@@ -3,7 +3,6 @@ using AutoMapper;
 using HtmlAgilityPack;
 using StockData.Layer.BusinessObjects;
 using StockData.Layer.Services;
-using StockData.Worker.Models.Companies;
 using System.Text.RegularExpressions;
 
 namespace StockData.Worker
@@ -12,23 +11,26 @@ namespace StockData.Worker
     {
         private readonly ILogger<Worker> _logger;
         private readonly ICompanyService _companyService;
+        private readonly IStockService _stockService;
         private IMapper _mapper;
+        private string _url;
 
-        public Worker(ILogger<Worker> logger,ICompanyService companyService,
-            IMapper mapper)
+        public Worker(ILogger<Worker> logger, ICompanyService companyService,
+            IStockService stockService, IMapper mapper)
+
         {
             _mapper = mapper;
             _logger = logger;
             _companyService = companyService;
+            _stockService = stockService;
+            _url = @"https://dse.com.bd/latest_share_price_scroll_l.php";
         }
 
         public override Task StartAsync(CancellationToken cancellationToken)
         {
-            var html = @"https://dse.com.bd/latest_share_price_scroll_l.php";
 
             HtmlWeb web = new HtmlWeb();
-
-            var htmlDoc = web.Load(html);
+            var htmlDoc = web.Load(_url);
 
             if (_companyService.GetCompanyCount() == 0)
             {
@@ -50,8 +52,6 @@ namespace StockData.Worker
 
                         _companyService.CreateCompany(company);
                     }
-
-
                 }
             }
 
@@ -63,10 +63,60 @@ namespace StockData.Worker
             while (!stoppingToken.IsCancellationRequested)
             {
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
+
+                HtmlWeb web = new HtmlWeb();
+                var htmlDoc = web.Load(_url);
+
+                HtmlNode tables = htmlDoc.DocumentNode.SelectSingleNode("//table");
+
+                foreach (HtmlNode node in tables.SelectNodes("//tr"))
+                {
+                    string id = ParsedValues(node, 1);
+                    string latestPrice = ParsedValues(node, 3);
+                    string highestPrice = ParsedValues(node, 4);
+                    string lowestPrice = ParsedValues(node, 5);
+                    string closingPrice = ParsedValues(node, 6);
+                    string yesterdayPrice = ParsedValues(node, 7);
+                    string change = ParsedValues(node, 8);
+                    string trade = ParsedValues(node, 9);
+                    string value = ParsedValues(node, 10);
+                    string volume = ParsedValues(node, 11);
+
+
+                    if (latestPrice.Length >= 1 && latestPrice.Length <= 8)
+                    {
+                        int idStock = Int32.Parse(id);
+                        double latestPriceStock = Double.Parse(latestPrice);
+                        double highestPriceStock = Double.Parse(highestPrice);
+                        double lowestPriceStock = Double.Parse(lowestPrice);
+                        double closingStock = Double.Parse(closingPrice);
+                        double yesterdayStock = Double.Parse(yesterdayPrice);
+                        double tradeStock = Double.Parse(trade);
+                        double valueStock = Double.Parse(value);
+                        double volumeStock = Double.Parse(volume);
+
+                        var stocks = new StockPrice
+                        {
+                            CompanyId = idStock,
+                            LastTradingPrice = latestPriceStock,
+                            HighestPrice = highestPriceStock,
+                            LowestPrice = lowestPriceStock,
+                            ClosestPrice = closingStock,
+                            YesterdayClosingPrice = yesterdayStock,
+                            Change = change,
+                            Trade = tradeStock,
+                            Value = valueStock,
+                            Volume = volumeStock
+                        };
+                        _stockService.CreateStocks(stocks);
+                    }
+                }
+
+                _logger.LogInformation("Stock price inserted at : {time}", DateTimeOffset.Now);
+                await Task.Delay(60000, stoppingToken);
             }
         }
-        static string ParsedValues(HtmlNode node, int index)
+        private static string ParsedValues(HtmlNode node, int index)
         {
             var id = node.SelectSingleNode($"td[{index}]") == null ? "" : node.SelectSingleNode($"td[{index}]").InnerText;
             return Regex.Replace(id, @"\s", "");

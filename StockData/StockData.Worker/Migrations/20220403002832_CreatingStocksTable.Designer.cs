@@ -8,11 +8,11 @@ using StockData.Layer.DbContexts;
 
 #nullable disable
 
-namespace StockData.Worker.Data.Migrations
+namespace StockData.Worker.Migrations
 {
     [DbContext(typeof(StockDbContext))]
-    [Migration("20220402040644_CreatingCompanyTable")]
-    partial class CreatingCompanyTable
+    [Migration("20220403002832_CreatingStocksTable")]
+    partial class CreatingStocksTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,7 +81,7 @@ namespace StockData.Worker.Data.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("StockPrice");
+                    b.ToTable("StockPrices");
                 });
 
             modelBuilder.Entity("StockData.Layer.Entities.StockPrice", b =>
