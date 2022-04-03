@@ -23,7 +23,11 @@ namespace StockData.Layer.DbContexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer(_connectionString, m => m.MigrationsAssembly(_assemblyName));
+            {
+                optionsBuilder.UseSqlServer(_connectionString, m => {
+                    m.MigrationsAssembly(_assemblyName);
+                });
+            }
 
             base.OnConfiguring(optionsBuilder);
         }

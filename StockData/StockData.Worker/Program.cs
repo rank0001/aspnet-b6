@@ -7,7 +7,8 @@ using Serilog.Events;
 using StockData.Layer.DbContexts;
 using Microsoft.EntityFrameworkCore;
 
-var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", false)
+var configuration = new ConfigurationBuilder().
+    AddJsonFile("appsettings.json", false)
                 .AddEnvironmentVariables()
                 .Build();
 
