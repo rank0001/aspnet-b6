@@ -28,10 +28,11 @@ namespace StockData.Worker
 
         public override Task StartAsync(CancellationToken cancellationToken)
         {
-            _web = new HtmlWeb();
-            _document = _web.Load(_url);
             if (_companyService.GetCompanyCount() == 0)
             {
+
+                _web = new HtmlWeb();
+                _document = _web.Load(_url);
                 if (_document != null)
                 {
                     HtmlNode tables = _document.DocumentNode.SelectSingleNode("//table");
@@ -65,70 +66,76 @@ namespace StockData.Worker
             {
 
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                _web = new HtmlWeb();
-                _document = _web.Load(_url);
-                var nodes = _document.DocumentNode.
-                   SelectSingleNode("//*[text()[contains(.,'Market Status')]]")
-                       .InnerText;
-                var values = nodes.Split(":")[1];
-                _marketStatus = Regex.Replace(values, @"\s", "");
-
-                if (_document != null)
+                try
                 {
-                    if (_marketStatus == "Open")
+                    _web = new HtmlWeb();
+                    _document = _web.Load(_url);
+                    var nodes = _document.DocumentNode.
+                       SelectSingleNode("//*[text()[contains(.,'Market Status')]]")
+                           .InnerText;
+                    var values = nodes.Split(":")[1];
+                    _marketStatus = Regex.Replace(values, @"\s", "");
+
+                    if (_document != null)
                     {
-                        HtmlNode tables = _document.DocumentNode
-                            .SelectSingleNode("//table");
-
-                        foreach (HtmlNode node in tables.SelectNodes("//tr"))
+                        if (_marketStatus == "Open")
                         {
-                            string id = ParsedValues(node, 1);
-                            string latestPrice = ParsedValues(node, 3);
-                            string highestPrice = ParsedValues(node, 4);
-                            string lowestPrice = ParsedValues(node, 5);
-                            string closingPrice = ParsedValues(node, 6);
-                            string yesterdayPrice = ParsedValues(node, 7);
-                            string change = ParsedValues(node, 8);
-                            string trade = ParsedValues(node, 9);
-                            string value = ParsedValues(node, 10);
-                            string volume = ParsedValues(node, 11);
+                            HtmlNode tables = _document.DocumentNode
+                                .SelectSingleNode("//table");
 
-                            if (latestPrice.Length >= 1 &&
-                                latestPrice.Length <= 8)
+                            foreach (HtmlNode node in tables.SelectNodes("//tr"))
                             {
-                                int idStock = Int32.Parse(id);
-                                double latestPriceStock = Double.Parse(latestPrice);
-                                double highestPriceStock = Double.Parse(highestPrice);
-                                double lowestPriceStock = Double.Parse(lowestPrice);
-                                double closingStock = Double.Parse(closingPrice);
-                                double yesterdayStock = Double.Parse(yesterdayPrice);
-                                double tradeStock = Double.Parse(trade);
-                                double valueStock = Double.Parse(value);
-                                double volumeStock = Double.Parse(volume);
+                                string id = ParsedValues(node, 1);
+                                string latestPrice = ParsedValues(node, 3);
+                                string highestPrice = ParsedValues(node, 4);
+                                string lowestPrice = ParsedValues(node, 5);
+                                string closingPrice = ParsedValues(node, 6);
+                                string yesterdayPrice = ParsedValues(node, 7);
+                                string change = ParsedValues(node, 8);
+                                string trade = ParsedValues(node, 9);
+                                string value = ParsedValues(node, 10);
+                                string volume = ParsedValues(node, 11);
 
-                                var stocks = new StockPrice
+                                if (latestPrice.Length >= 1 &&
+                                    latestPrice.Length <= 8)
                                 {
-                                    CompanyId = idStock,
-                                    LastTradingPrice = latestPriceStock,
-                                    HighestPrice = highestPriceStock,
-                                    LowestPrice = lowestPriceStock,
-                                    ClosestPrice = closingStock,
-                                    YesterdayClosingPrice = yesterdayStock,
-                                    Change = change,
-                                    Trade = tradeStock,
-                                    Value = valueStock,
-                                    Volume = volumeStock
-                                };
-                                _stockService.CreateStocks(stocks);
+                                    int idStock = Int32.Parse(id);
+                                    double latestPriceStock = Double.Parse(latestPrice);
+                                    double highestPriceStock = Double.Parse(highestPrice);
+                                    double lowestPriceStock = Double.Parse(lowestPrice);
+                                    double closingStock = Double.Parse(closingPrice);
+                                    double yesterdayStock = Double.Parse(yesterdayPrice);
+                                    double tradeStock = Double.Parse(trade);
+                                    double valueStock = Double.Parse(value);
+                                    double volumeStock = Double.Parse(volume);
+
+                                    var stocks = new StockPrice
+                                    {
+                                        CompanyId = idStock,
+                                        LastTradingPrice = latestPriceStock,
+                                        HighestPrice = highestPriceStock,
+                                        LowestPrice = lowestPriceStock,
+                                        ClosestPrice = closingStock,
+                                        YesterdayClosingPrice = yesterdayStock,
+                                        Change = change,
+                                        Trade = tradeStock,
+                                        Value = valueStock,
+                                        Volume = volumeStock
+                                    };
+                                    _stockService.CreateStocks(stocks);
+                                }
                             }
+
+                            _logger.LogInformation("Stock price inserted at:" +
+                                " {time}", DateTimeOffset.Now);
                         }
 
-                        _logger.LogInformation("Stock price inserted at:" +
-                            " {time}", DateTimeOffset.Now);
                     }
-
                 }
-
+                catch (Exception ex)
+                {
+                    Console.WriteLine("the error is: " + ex.Message);
+                }
                 await Task.Delay(60000, stoppingToken);
             }
         }
