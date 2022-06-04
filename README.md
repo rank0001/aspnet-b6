@@ -1,1 +1,1 @@
-### Assignment and exam collection in asp dot net batch 6
+### AWS assignmnet to perform operations through code
