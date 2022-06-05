@@ -12,4 +12,8 @@
     <PackageReference Include="AWSSDK.S3" Version="3.7.9.11" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BucketLibrary\BucketLibrary.csproj" />
+  </ItemGroup>
+
 </Project>
