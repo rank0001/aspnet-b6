@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamoDbTask", "DynamoDbTas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamoDBLibrary", "DynamoDBLibrary\DynamoDBLibrary.csproj", "{FF5AE0DE-C08A-4379-B1E0-494B0EB03481}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQSLibrary", "SQSLibrary\SQSLibrary.csproj", "{DF4FD421-F93E-4FC6-955D-4460A6A6C965}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{FF5AE0DE-C08A-4379-B1E0-494B0EB03481}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF5AE0DE-C08A-4379-B1E0-494B0EB03481}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF5AE0DE-C08A-4379-B1E0-494B0EB03481}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF4FD421-F93E-4FC6-955D-4460A6A6C965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF4FD421-F93E-4FC6-955D-4460A6A6C965}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF4FD421-F93E-4FC6-955D-4460A6A6C965}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF4FD421-F93E-4FC6-955D-4460A6A6C965}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

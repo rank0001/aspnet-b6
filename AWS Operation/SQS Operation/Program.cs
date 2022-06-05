@@ -1,39 +1,41 @@
-﻿using SQS_Operation;
+﻿using SQSLibrary;
 
 var body = "My name is zubayer";
 
 QueueOperation queueOperation = new QueueOperation();
 
-//for creating queue
-//string url = await queueOperation.CreateQueueAsync("zubayerSQS");
-
-
 var myUrl = "https://sqs.us-east-1.amazonaws.com/847888492411/zubayerSQS";
 
-//for sending message in queue
-//var messageId = await queueOperation.AddMessage(myUrl, body);
-//for (int i = 0; i < 25; i++)
+#region creating queue
+//for creating queue
+//string url = await queueOperation.CreateQueueAsync("zubayerSQS");
+#endregion
+
+
+#region Adding Message to a queue
+//int j = 0;
+//do
 //{
-//    await queueOperation.AddMessage(myUrl, body);
+//    var messageId = await queueOperation.AddMessage(myUrl, body);
+//    j++;
+//    Console.WriteLine(messageId);
+//} while (j!= 10);
+#endregion
 
-//}
-
-//Console.WriteLine(messageId);
-
-
-
-//for reading messages in queue;
+#region For reading  messages in queue;
 //int numbers = 10;
-//var messages = await queueOperation.ReadMessageAsync(myUrl,numbers);
+//var messages = await queueOperation.ReadMessageAsync(myUrl, numbers);
 
-//foreach(var message in messages)
+//foreach (var message in messages)
 //{
 //    Console.WriteLine(message);
 //}
+#endregion
 
-//for deleting messages 
-//await queueOperation.ReceiveAndDeleteMessage(myUrl);
-
+#region for reading and deleting messages
+//int messageNumber = 5;
+//await queueOperation.ReceiveAndDeleteMessages(myUrl,messageNumber);
+#endregion
 
 
 

@@ -1,12 +1,8 @@
 ﻿using Amazon.SQS;
 using Amazon.SQS.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SQS_Operation
+
+namespace SQSLibrary
 {
     public class QueueOperation
     {
@@ -36,48 +32,52 @@ namespace SQS_Operation
             else
                 return null;
         }
-        public async Task<IList<string>> ReadMessageAsync(string url,int number)
+        public async Task<IList<string>> ReadMessageAsync(string url, int number)
         {
             List<string> messages = new List<string>();
             var request = new ReceiveMessageRequest(url);
             request.MaxNumberOfMessages = number;
-            var count = 0;
-
-            var response = await _client.ReceiveMessageAsync(request);
+            ReceiveMessageResponse response;
+            do
+            {
+                response = await _client.ReceiveMessageAsync(request);
+            } while (response.Messages.Count != number);
 
             if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
             {
-                
                 foreach (Message message in response.Messages)
                 {
-                    messages.Add(message.Body);
-                    Console.WriteLine(message.Body);
-                    count++;
-                   
+                    messages.Add(message.Body);    
                 }
-
             }
             return messages;
 
         }
 
-        public async Task ReceiveAndDeleteMessage(string url)
+        public async Task ReceiveAndDeleteMessages(string url,int numberofMessages)
         {
-            var receiveMessageRequest = new ReceiveMessageRequest
+            var request = new ReceiveMessageRequest
             {
-                MaxNumberOfMessages = 1,
+                MaxNumberOfMessages = numberofMessages,
                 QueueUrl = url,
             };
-
-            var receiveMessageResponse = await _client.ReceiveMessageAsync(receiveMessageRequest);
-
-            var deleteMessageRequest = new DeleteMessageRequest
+            ReceiveMessageResponse response;
+            do
             {
-                QueueUrl = url,
-                ReceiptHandle = receiveMessageResponse.Messages[0].ReceiptHandle
-            };
+                response = await _client.ReceiveMessageAsync(request);
+            } while (response.Messages.Count != numberofMessages);
 
-            await _client.DeleteMessageAsync(deleteMessageRequest);
+            for (int i = 0; i < numberofMessages; i++)
+            {
+                var deleteMessageRequest = new DeleteMessageRequest
+                {
+                    QueueUrl = url,
+                    ReceiptHandle = response.Messages[i].ReceiptHandle
+                };
+
+                await _client.DeleteMessageAsync(deleteMessageRequest);
+            }
+
         }
 
 
