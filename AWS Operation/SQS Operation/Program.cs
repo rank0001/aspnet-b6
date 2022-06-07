@@ -11,7 +11,6 @@ var myUrl = "https://sqs.us-east-1.amazonaws.com/847888492411/zubayerSQS";
 //string url = await queueOperation.CreateQueueAsync("zubayerSQS");
 #endregion
 
-
 #region Adding Message to a queue
 //int j = 0;
 //do
@@ -19,7 +18,7 @@ var myUrl = "https://sqs.us-east-1.amazonaws.com/847888492411/zubayerSQS";
 //    var messageId = await queueOperation.AddMessage(myUrl, body);
 //    j++;
 //    Console.WriteLine(messageId);
-//} while (j!= 10);
+//} while (j != 10);
 #endregion
 
 #region For reading  messages in queue;
