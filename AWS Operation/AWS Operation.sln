@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQSTask", "SQS Operation\SQSTask.csproj", "{791B65F8-6534-4AC3-A403-4BD00E694E85}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketTask", "Bucket Task\BucketTask.csproj", "{7B68C97D-0477-4E7A-A41A-C67CB4C3363A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamoDbTask", "DynamoDbTask\DynamoDbTask.csproj", "{190BFBCC-64B2-49E5-952C-7337194A65F7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FF5AE0DE-C08A-4379-B1E0-494B0EB03481} = {FF5AE0DE-C08A-4379-B1E0-494B0EB03481}
@@ -18,20 +14,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQSLibrary", "SQSLibrary\SQ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketLibrary", "BucketLibrary\BucketLibrary.csproj", "{C064636C-B520-46AB-BD59-1F0B9A7D64D4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketTask", "BucketTask\BucketTask.csproj", "{FADE99D4-8F31-46DE-9F85-734604BD79F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQSTask", "SQSTask\SQSTask.csproj", "{1AF93655-AAE4-4C39-8045-3F4A27FAAC39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{791B65F8-6534-4AC3-A403-4BD00E694E85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{791B65F8-6534-4AC3-A403-4BD00E694E85}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{791B65F8-6534-4AC3-A403-4BD00E694E85}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{791B65F8-6534-4AC3-A403-4BD00E694E85}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7B68C97D-0477-4E7A-A41A-C67CB4C3363A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7B68C97D-0477-4E7A-A41A-C67CB4C3363A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7B68C97D-0477-4E7A-A41A-C67CB4C3363A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7B68C97D-0477-4E7A-A41A-C67CB4C3363A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{190BFBCC-64B2-49E5-952C-7337194A65F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{190BFBCC-64B2-49E5-952C-7337194A65F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{190BFBCC-64B2-49E5-952C-7337194A65F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,6 +40,14 @@ Global
 		{C064636C-B520-46AB-BD59-1F0B9A7D64D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C064636C-B520-46AB-BD59-1F0B9A7D64D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C064636C-B520-46AB-BD59-1F0B9A7D64D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FADE99D4-8F31-46DE-9F85-734604BD79F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FADE99D4-8F31-46DE-9F85-734604BD79F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FADE99D4-8F31-46DE-9F85-734604BD79F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FADE99D4-8F31-46DE-9F85-734604BD79F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AF93655-AAE4-4C39-8045-3F4A27FAAC39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AF93655-AAE4-4C39-8045-3F4A27FAAC39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AF93655-AAE4-4C39-8045-3F4A27FAAC39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AF93655-AAE4-4C39-8045-3F4A27FAAC39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
