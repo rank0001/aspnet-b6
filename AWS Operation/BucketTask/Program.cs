@@ -24,7 +24,7 @@ await bucketOperations.UplodFileAsync(bucketName, fileName3, filepath3);
 #endregion
 
 #region Download File
-bucketOperations.DownloadObject(bucketName, fileName1, @"D:\dev skill materials\planProjectDownload.txt");
+bucketOperations.DownloadObject(bucketName, fileName1,downloadLocation);
 #endregion
 
 #region Deleting a file from bucket 
