@@ -3,20 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQS Operation", "SQS Operation\SQS Operation.csproj", "{791B65F8-6534-4AC3-A403-4BD00E694E85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQSTask", "SQS Operation\SQSTask.csproj", "{791B65F8-6534-4AC3-A403-4BD00E694E85}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bucket Task", "Bucket Task\Bucket Task.csproj", "{7B68C97D-0477-4E7A-A41A-C67CB4C3363A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketTask", "Bucket Task\BucketTask.csproj", "{7B68C97D-0477-4E7A-A41A-C67CB4C3363A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamoDbTask", "DynamoDbTask\DynamoDbTask.csproj", "{190BFBCC-64B2-49E5-952C-7337194A65F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamoDbTask", "DynamoDbTask\DynamoDbTask.csproj", "{190BFBCC-64B2-49E5-952C-7337194A65F7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FF5AE0DE-C08A-4379-B1E0-494B0EB03481} = {FF5AE0DE-C08A-4379-B1E0-494B0EB03481}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamoDBLibrary", "DynamoDBLibrary\DynamoDBLibrary.csproj", "{FF5AE0DE-C08A-4379-B1E0-494B0EB03481}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamoDBLibrary", "DynamoDBLibrary\DynamoDBLibrary.csproj", "{FF5AE0DE-C08A-4379-B1E0-494B0EB03481}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQSLibrary", "SQSLibrary\SQSLibrary.csproj", "{DF4FD421-F93E-4FC6-955D-4460A6A6C965}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQSLibrary", "SQSLibrary\SQSLibrary.csproj", "{DF4FD421-F93E-4FC6-955D-4460A6A6C965}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BucketLibrary", "BucketLibrary\BucketLibrary.csproj", "{C064636C-B520-46AB-BD59-1F0B9A7D64D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BucketLibrary", "BucketLibrary\BucketLibrary.csproj", "{C064636C-B520-46AB-BD59-1F0B9A7D64D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
