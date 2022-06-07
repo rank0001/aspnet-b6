@@ -1,1 +1,1 @@
-### AWS assignmnet to perform operations through code
+### AWS assignment to perform operations through code
